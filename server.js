@@ -3,6 +3,7 @@ import express from 'express';
 const app = express();
 console.log(process.env);
 const NODE_ENV = process.env.NODE_ENV || 'production';
+const PORT = process.env.PORT || 3000;
 const name = process.env.NAME; // <-- NEW
 const greeting = process.env.GREETING; // <-- NEW
 
@@ -19,6 +20,23 @@ app.get('/', (req, res) => {
     res.send(`Hello, ${name}! ${greeting}`); // <-- UPDATED
     app.get('/new-route', (req, res) => {
     res.send('This is a new route!'); });
+});
+/**
+ * Routes
+ */
+app.get('/', (req, res) => {
+    const title = 'Welcome Home';
+    res.render('home', { title });
+});
+
+app.get('/about', (req, res) => {
+    const title = 'About Me';
+    res.render('about', { title });
+});
+
+app.get('/products', (req, res) => {
+    const title = 'Our Products';
+    res.render('products', { title });
 });
 
 // When in development mode, start a WebSocket server for live reloading
@@ -41,7 +59,6 @@ if (NODE_ENV.includes('dev')) {
     }
 }
 
-const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on http://127.0.0.1:${PORT}`);
     
